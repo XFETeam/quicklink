@@ -41,7 +41,9 @@ npm install --save @xfe-team/better-quicklink
 <script src="//zhcdn01.xoyo.com/xassets/lib/better-quicklink/{VERSION}/better-quicklink.js"></script>
 <!-- 初始化（你可以随时进行） -->
 <script>
-quicklink();
+if(!!(window.IntersectionObserver && Array.prototype.includes && window.Promise && window.URL)) {
+  quicklink();
+}
 </script>
 ```
 
