@@ -277,6 +277,6 @@ Promise.all(promises);
 
 ## 许可证
 
-本项目已获得 Apache-2.0 许可。
+本项目已获得 Apache-2.0 许可。<br /> 
 原作者: addyosmani <addyosmani@gmail.com> <br /> 
 Fork 来源: [quicklink](https://github.com/GoogleChromeLabs/quicklink)
