@@ -1,29 +1,30 @@
 {
-  "name": "quicklink",
-  "version": "1.0.1",
+  "name": "better-quicklink",
+  "version": "0.0.1",
   "description": "Faster subsequent page-loads by prefetching in-viewport links during idle time",
-  "main": "dist/quicklink.js",
-  "repository": "https://github.com/GoogleChromeLabs/quicklink.git",
-  "homepage": "https://github.com/GoogleChromeLabs/quicklink",
+  "main": "dist/better-quicklink.js",
+  "repository": "https://github.com/XFETeam/better-quicklink.git",
+  "homepage": "https://github.com/XFETeam/better-quicklink",
   "bugs": {
-    "url": "https://github.com/GoogleChromeLabs/quicklink/issues"
+    "url": "https://github.com/XFETeam/better-quicklink/issues"
   },
-  "author": "addyosmani <addyosmani@gmail.com>",
+  "author": "She Ailun",
+  "origin-author": "addyosmani <addyosmani@gmail.com>",
   "license": "Apache-2.0",
-  "module": "dist/quicklink.mjs",
-  "jsnext:main": "dist/quicklink.mjs",
-  "umd:main": "dist/quicklink.umd.js",
-  "unpkg": "dist/quicklink.umd.js",
+  "module": "dist/better-quicklink.mjs",
+  "jsnext:main": "dist/better-quicklink.mjs",
+  "umd:main": "dist/better-quicklink.umd.js",
+  "unpkg": "dist/better-quicklink.umd.js",
   "scripts": {
     "lint": "eslint src/*.mjs test/*.js demos/*.js",
     "lint-fix": "eslint src/*.mjs test/*.js --fix demos/*.js",
     "start": "http-server .",
-    "test": "yarn run build && mocha test/bootstrap.js --recursive test",
+    "test": "npm run build && mocha test/bootstrap.js --recursive test",
     "build": "microbundle src/index.mjs --no-sourcemap",
-    "prepare": "yarn run -s build",
+    "prepare": "npm run -s build",
     "bundlesize": "bundlesize",
-    "changelog": "yarn conventional-changelog -i CHANGELOG.md -s -r 0",
-    "release": "cross-var yarn run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags"
+    "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0",
+    "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags"
   },
   "keywords": [
     "prefetch",

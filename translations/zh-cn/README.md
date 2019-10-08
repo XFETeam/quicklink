@@ -1,15 +1,13 @@
-<p align="center">
-  <img src="https://i.imgur.com/NVRZLHv.png" width="640" alt="quicklink">
-  <br>
-  <a href="https://www.npmjs.org/package/quicklink"><img src="https://img.shields.io/npm/v/quicklink.svg?style=flat" alt="npm"></a>
-  <a href="https://unpkg.com/quicklink"><img src="https://img.badgesize.io/https://unpkg.com/quicklink/dist/quicklink.js?compression=gzip" alt="gzip size"></a>
-  <a href="https://www.npmjs.com/package/quicklink"><img src="https://img.shields.io/npm/dt/quicklink.svg" alt="downloads" ></a>
-  <a href="https://travis-ci.org/GoogleChromeLabs/quicklink"><img src="https://travis-ci.org/GoogleChromeLabs/quicklink.svg?branch=master" alt="travis"></a>
-</p>
-
-# quicklink
+# better-quicklink
 
 > 可以在空闲时间预获取页面可视区域（以下简称视区）内的链接，加快后续加载速度。
+
+## Fork 改进
+
+当前工具库通过 fork 的方式进行了以下问题的改进:
+
+1. quicklink 参数 `origins` 应该可以使用正则数组或字符串用于匹配, 因为这样在大多数情况下更为实用
+2. quicklink 当前仅仅只是用过 html 的 tag 标签进行静态的 html 拉去. 然而, 我们可以使用 iframe 进行预拉去整个 html 包括 html 所关联的内部资源. 
 
 ## 工作原理
 
@@ -29,10 +27,8 @@ Quicklink 通过以下方式加快后续页面的加载速度：
 [node](http://nodejs.org) 或 [npm](https://npmjs.com) 用户:
 
 ```sh
-npm install --save quicklink
+npm install --save better-quicklink
 ```
-
-或者从 [unpkg.com/quicklink](https://unpkg.com/quicklink) 获取 `quicklink`。
 
 ## 用法
 
@@ -42,7 +38,7 @@ npm install --save quicklink
 
 ```html
 <!-- 从 dist 目录下引入 quicklink -->
-<script src="dist/quicklink.js"></script>
+<script src="dist/better-quicklink.js"></script>
 <!-- 初始化（你可以随时进行） -->
 <script>
 quicklink();
@@ -62,7 +58,7 @@ window.addEventListener('load', () =>{
 或者导入 ES 模块：
 
 ```js
-import quicklink from "dist/quicklink.mjs";
+import quicklink from "dist/better-quicklink.mjs";
 quicklink();
 ```
 
@@ -177,6 +173,33 @@ quicklink({
 });
 ```
 
+### 定义一个自定义正则匹配所有源列表(Fork 变更)
+
+指定可被预获取的**正则**主机名列表，默认情况下仅允许同源主机名。
+
+```js
+quicklink({
+  origins: [
+    /xoyo\.com$/i,
+    /baidu\.com$/i
+  ]
+});
+```
+
+### 使用 iframe 进行预加载 (Fork 变更)
+
+使用属性 `useIframeStrategy` 用于启用 iframe 预加载
+
+```js
+window.quicklink({
+  useIframeStrategy: true,
+  origins: [
+     /xoyo\.com$/i,
+     /baidu\.com$/i
+  ],
+});
+```
+
 ### 自定义忽略模式
 
 以下过滤器会在匹配 `origin` 之后执行。Ignores 在避免大型文件下载或 DOM 属性动态响应时十分有用！
@@ -255,3 +278,5 @@ Promise.all(promises);
 ## 许可证
 
 本项目已获得 Apache-2.0 许可。
+原作者: addyosmani <addyosmani@gmail.com> <br /> 
+Fork 来源: [quicklink](https://github.com/GoogleChromeLabs/quicklink)

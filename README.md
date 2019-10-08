@@ -1,14 +1,12 @@
-<p align="center">
-  <img src="https://i.imgur.com/NVRZLHv.png" width="640" alt="quicklink">
-  <br>
-  <a href="https://www.npmjs.org/package/quicklink"><img src="https://img.shields.io/npm/v/quicklink.svg?style=flat" alt="npm"></a>
-  <a href="https://unpkg.com/quicklink"><img src="https://img.badgesize.io/https://unpkg.com/quicklink/dist/quicklink.js?compression=gzip" alt="gzip size"></a>
-  <a href="https://www.npmjs.com/package/quicklink"><img src="https://img.shields.io/npm/dt/quicklink.svg" alt="downloads" ></a>
-  <a href="https://travis-ci.org/GoogleChromeLabs/quicklink"><img src="https://travis-ci.org/GoogleChromeLabs/quicklink.svg?branch=master" alt="travis"></a>
-</p>
-
-# quicklink
+# better-quicklink
 > Faster subsequent page-loads by prefetching in-viewport links during idle time
+
+## Fork Enhancement
+
+Current library solves the following problems:
+
+1. quicklink parameters `origins` should be able to use array of regex or string which will be more useful in many ways
+2. quicklink currently only prefetches static href in "a tag". In most cases, it prefetch html file. However, we could use iframe prefetch the entire html including associate assets.
 
 ## How it works
 
@@ -21,17 +19,15 @@ Quicklink attempts to make navigations to subsequent pages load faster. It:
 
 ## Why
 
-This project aims to be a drop-in solution for sites to prefetch links based on what is in the user's viewport. It also aims to be small (**< 1KB minified/gzipped**).
+This project aims to be a drop-in solution for sites to prefetch links based on what is in the user's viewport. It also aims to be small.
 
 ## Installation
 
 For use with [node](https://nodejs.org) and [npm](https://npmjs.com):
 
 ```sh
-npm install --save quicklink
+npm install --save better-quicklink
 ```
-
-You can also grab `quicklink` from [unpkg.com/quicklink](https://unpkg.com/quicklink).
 
 ## Usage
 
@@ -41,7 +37,7 @@ Quickstart:
 
 ```html
 <!-- Include quicklink from dist -->
-<script src="dist/quicklink.umd.js"></script>
+<script src="dist/better-quicklink.umd.js"></script>
 <!-- Initialize (you can do this whenever you want) -->
 <script>
 quicklink();
@@ -61,7 +57,7 @@ window.addEventListener('load', () =>{
 ES Module import:
 
 ```js
-import quicklink from "quicklink/dist/quicklink.mjs";
+import quicklink from "quicklink/dist/better-quicklink.mjs";
 quicklink();
 ```
 
@@ -158,6 +154,35 @@ quicklink({
     'example.com',
     // ...
   ]
+});
+```
+
+### Specify a custom list of allowed origins using regex (Fork changes)
+
+Provide a list of **REGEX** hostnames that should be prefetch-able. Only the same origin is allowed by default.
+
+> **Important:** You must also include your own hostname!
+
+```js
+quicklink({
+  origins: [
+    /xoyo\.com$/i,
+    /baidu\.com$/i
+  ]
+});
+```
+
+### Set the prefetch using iframe (Fork changes)
+
+using property `useIframeStrategy` to enable iframe fetching.
+
+```js
+window.quicklink({
+  useIframeStrategy: true,
+  origins: [
+     /xoyo\.com$/i,
+     /baidu\.com$/i
+  ],
 });
 ```
 
@@ -272,4 +297,6 @@ To workaround this problem, you can consider passing along session information v
 
 ## License
 
-Licensed under the Apache-2.0 license.
+Licensed under the Apache-2.0 license. <br />
+Origin Author: addyosmani <addyosmani@gmail.com> <br /> 
+Fork Source: [quicklink](https://github.com/GoogleChromeLabs/quicklink)

@@ -12,10 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 
 import prefetch from './prefetch.mjs';
 import requestIdleCallback from './request-idle-callback.mjs';
+import {removeIframeStrategyContainer} from './iframe-strategy';
 
 const toPrefetch = new Set();
 
@@ -38,7 +39,7 @@ const observer = window.IntersectionObserver && new IntersectionObserver(entries
  */
 function prefetcher(url) {
   toPrefetch.delete(url);
-  prefetch(new URL(url, location.href).toString(), observer.priority);
+  prefetch(new URL(url, location.href).toString(), observer.priority, observer.useIframeStrategy);
 }
 
 /**
@@ -57,6 +58,18 @@ function isIgnored(node, filter) {
 }
 
 /**
+ * 判断 link is inside links or not
+ * @param {(string|RegExp)[]} links - 链接列表
+ * @param {string} link - 链接
+ * @return {Boolean} url - 是否包含
+ */
+function includes(links, link) {
+  return links.some(function (l) {
+    return '[object RegExp]' === Object.prototype.toString.call(l) ? l.test(link) : l === link;
+  });
+}
+
+/**
  * Prefetch an array of URLs if the user's effective
  * connection type and data-saver preferences suggests
  * it would be useful. By default, looks at in-viewport
@@ -70,8 +83,10 @@ function isIgnored(node, filter) {
  * @param {Array|RegExp|Function} options.ignores - Custom filter(s) that run after origin checks
  * @param {Number} options.timeout - Timeout after which prefetching will occur
  * @param {Function} options.timeoutFn - Custom timeout function
+ * @param {Boolean} options.useIframeStrategy - Whether to use iframe to prefetch
+ *
  */
-export default function (options) {
+function quicklink(options) {
   if (!options) options = {};
 
   observer && (observer.priority = options.priority || false);
@@ -82,17 +97,21 @@ export default function (options) {
   const timeout = options.timeout || 2e3;
   const timeoutFn = options.timeoutFn || requestIdleCallback;
 
+  observer && (observer.useIframeStrategy = options.useIframeStrategy);
+
   timeoutFn(() => {
     // If URLs are given, prefetch them.
     if (options.urls) {
-      options.urls.forEach(prefetcher);
+      options.urls.forEach(url => {
+        prefetcher(url);
+      });
     } else if (observer) {
       // If not, find all links and use IntersectionObserver.
       Array.from((options.el || document).querySelectorAll('a'), link => {
         observer.observe(link);
         // If the anchor matches a permitted origin
         // ~> A `[]` or `true` means everything is allowed
-        if (!allowed.length || allowed.includes(link.hostname)) {
+        if (!allowed.length || includes(allowed, link.hostname)) {
           // If there are any filters, the link must not match any of them
           isIgnored(link, ignores) || toPrefetch.add(link.href);
         }
@@ -100,3 +119,7 @@ export default function (options) {
     }
   }, {timeout});
 }
+
+quicklink.removeIframeStrategyContainer = removeIframeStrategyContainer;
+
+export default quicklink;

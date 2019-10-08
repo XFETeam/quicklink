@@ -1,3 +1,6 @@
+import {createIframe} from './iframe-strategy';
+import isIframeSandboxSupport from './iframe-strategy/is-iframe-sandbox-support';
+
 /**
  * Portions copyright 2018 Google Inc.
  * Inspired by Gatsby's prefetching logic, with those portions
@@ -15,7 +18,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 const preFetched = {};
 
 /**
@@ -45,7 +48,7 @@ function linkPrefetchStrategy(url) {
 
     document.head.appendChild(link);
   });
-};
+}
 
 /**
  * Fetches a given URL using XMLHttpRequest
@@ -56,7 +59,7 @@ function xhrPrefetchStrategy(url) {
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest();
 
-    req.open(`GET`, url, req.withCredentials=true);
+    req.open(`GET`, url, req.withCredentials = true);
 
     req.onload = () => {
       (req.status === 200) ? resolve() : reject();
@@ -93,10 +96,11 @@ const supportedPrefetchStrategy = support('prefetch')
  * Prefetch a given URL with an optional preferred fetch priority
  * @param {String} url - the URL to fetch
  * @param {Boolean} isPriority - if is "high" priority
- * @param {Object} conn - navigator.connection (internal)
+ * @param {Object} useIframeStrategy - whether to use iframe strategy
+ * @param {Object} [conn] - navigator.connection (internal)
  * @return {Object} a Promise
  */
-function prefetcher(url, isPriority, conn) {
+function prefetcher(url, isPriority, useIframeStrategy, conn) {
   if (preFetched[url]) {
     return;
   }
@@ -106,10 +110,14 @@ function prefetcher(url, isPriority, conn) {
     if ((conn.effectiveType || '').includes('2g') || conn.saveData) return;
   }
 
+  if (isIframeSandboxSupport && useIframeStrategy) {
+    return createIframe(url);
+  }
+
   // Wanna do something on catch()?
   return (isPriority ? highPriFetchStrategy : supportedPrefetchStrategy)(url).then(() => {
     preFetched[url] = true;
   });
-};
+}
 
 export default prefetcher;
