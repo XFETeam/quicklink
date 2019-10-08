@@ -1,4 +1,4 @@
-# better-quicklink
+# @xfe-team/better-quicklink
 
 > 可以在空闲时间预获取页面可视区域（以下简称视区）内的链接，加快后续加载速度。
 
@@ -27,7 +27,7 @@ Quicklink 通过以下方式加快后续页面的加载速度：
 [node](http://nodejs.org) 或 [npm](https://npmjs.com) 用户:
 
 ```sh
-npm install --save better-quicklink
+npm install --save @xfe-team/better-quicklink
 ```
 
 ## 用法
