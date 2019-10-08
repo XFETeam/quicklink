@@ -1,12 +1,12 @@
 {
-  "name": "better-quicklink",
+  "name": "@xfe-team/better-quicklink",
   "version": "0.0.1",
   "description": "Faster subsequent page-loads by prefetching in-viewport links during idle time",
   "main": "dist/better-quicklink.js",
-  "repository": "https://github.com/XFETeam/better-quicklink.git",
-  "homepage": "https://github.com/XFETeam/better-quicklink",
+  "repository": "https://github.com/XFETeam/quicklink.git",
+  "homepage": "https://github.com/XFETeam/quicklink",
   "bugs": {
-    "url": "https://github.com/XFETeam/better-quicklink/issues"
+    "url": "https://github.com/XFETeam/quicklink/issues"
   },
   "author": "She Ailun",
   "origin-author": "addyosmani <addyosmani@gmail.com>",
@@ -24,7 +24,7 @@
     "prepare": "npm run -s build",
     "bundlesize": "bundlesize",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0",
-    "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags"
+    "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags && npm publish --access=public --registry=https://registry.npmjs.org/"
   },
   "keywords": [
     "prefetch",
