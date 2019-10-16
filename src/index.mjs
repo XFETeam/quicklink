@@ -39,7 +39,9 @@ const observer = window.IntersectionObserver && new IntersectionObserver(entries
  */
 function prefetcher(url) {
   toPrefetch.delete(url);
-  prefetch(new URL(url, location.href).toString(), observer.priority, observer.useIframeStrategy);
+  prefetch(new URL(url, location.href).toString(), observer.priority, observer.useIframeStrategy).catch(err => {
+    console.log(err);
+  });
 }
 
 /**

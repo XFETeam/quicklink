@@ -38,7 +38,7 @@ npm install --save @xfe-team/better-quicklink
 
 ```html
 <!-- 从 dist 目录下引入 quicklink -->
-<script src="//zhcdn01.xoyo.com/xassets/lib/better-quicklink/{VERSION}/better-quicklink.js"></script>
+<script src="//zhcdn01.xoyo.com/xassets/lib/better-quicklink/{VERSION}/better-quicklink.umd.js"></script>
 <!-- 初始化（你可以随时进行） -->
 <script>
 if(!!(window.IntersectionObserver && Array.prototype.includes && window.Promise && window.URL)) {
