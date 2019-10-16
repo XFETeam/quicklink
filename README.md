@@ -277,6 +277,16 @@ Promise.all(promises);
 - 在用 [Gatsby](https://gatsbyjs.org/) 吗？ 现在可以免费下载它了。它使用 `Intersection Observer` 预获取视图中的所有链接，本项目灵感亦来源于此。
 - 想要更加数据驱动的方案吗？ 参见 [Guess.js](https://guess-js.github.io/)。它根据用户上网方式，使用数据分析和机器学习来预获取资源。它还有 [Webpack](https://www.npmjs.com/package/guess-webpack) 和 [Gatsby](https://www.gatsbyjs.org/docs/optimize-prefetching-with-guessjs/) 的插件。
 
+## ChangeLog
+
+## 0.0.1 (2019-10-16)
+
+* feat: 临时修复 prefetch 潜在可能异常的场景
+
+## 0.0.1 (2019-10-08)
+
+* feat: init commit
+
 ## 许可证
 
 本项目已获得 Apache-2.0 许可。<br /> 

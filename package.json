@@ -1,6 +1,6 @@
 {
   "name": "@xfe-team/better-quicklink",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Faster subsequent page-loads by prefetching in-viewport links during idle time",
   "main": "dist/better-quicklink.js",
   "repository": "https://github.com/XFETeam/quicklink.git",
